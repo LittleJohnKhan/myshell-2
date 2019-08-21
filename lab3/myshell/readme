@@ -1,0 +1,119 @@
+----------------------------------------------
+This is mysh by Tong Wu from
+    Computer Science and Technology College of
+    Zhejiang University.
+----------------------------------------------
+
+Introduction
+------------
+Mysh is a simple shell for Unix/Linux, which is implemented for homework of Linux Course.
+
+A shell is a program that runs between the user layer and the OS kernel. It parses the command which
+is input from the keyboard and uses system call or execute other programs, and then outputs to the
+screen. A shell usually runs on a virtual terminal in Unix/Linux system. Besides, a shell program
+can execute a shell script, which contains a series of commands.
+
+Installing mysh
+---------------
+To compile:
+$ make
+
+To clean the files from compling:
+$ make clean
+
+To move the executable file into $PATH:
+$ make install
+
+To uninstall mysh from $PATH:
+$ make uninstall
+
+Features
+--------
+1. Supports inner commands: pwd, time, clear, exit, environ, jobs, fg, bg, ls, echo, cd, exec, set,
+                            unset, umask, test, shift.
+
+2. Supports external commands.
+
+3. Supports shell scripts.
+
+4. Supports I/O redirection.
+
+5. Supports pipe.
+
+6. Supports job management, including foreground, background, hangup.
+
+Instructions
+------------
+1. Basic operation
+Some basic inner commands in mysh are as followings.
+    -time       print the current time
+    -clear      clear the terminal screen
+    -echo       print strings onto the screen
+    -shift      left-shift arguments in a line read from the keyboard
+    -test       test whether the arguments meets some condition
+    -exec       execute a command and the exit the shell
+    -exit       exit the shell
+
+2. File system operation
+In Unix/Linux system, anything is referred as a file, including regualr files, directory files, 
+symbolic links and so on. Some inner commands are about the file system:
+    -pwd        print the current working directory
+    -cd         change the current working directory
+        example: cd /
+    -ls         list all the files of a directory
+        example: ls /etc
+    -umask      change the current umask
+        example: umask 022
+Umask is a four-digit octal number. The priviledge represented by the mask is banned.
+
+3. Job management operation
+Jobs in a shell can be divided into foreground job and background job. A foreground job and several
+background jobs can be carried out at the same time. Commands ending with & is background command.
+For example:
+    $ sleep 3 &
+When a background command is carried out, command $ fg can convert it into the foreground. After 
+entering command $ jobs, all the background jobs will be printed to the screen.
+
+When a foreground command is carried out, ctrl-Z can hang it up.
+Then enter $ bg command, this command will be continued in the background.
+
+
+4. Environment variable operation
+There are some variables which are stored in the shell environment, instead of the child program.
+Variables of this kind are called environment variables. Three inner commands are about Environment
+varibales in mysh:
+    -environ    print the names and values of all environment variables
+    -set        set the value of a variable
+        example: $ set wt cj
+    -unset      delete an existed environment variable
+        example: $ unset wt
+
+5. I/O redirection and pipe
+As a typical Unix command, it gets input from the keyboard and the results are displayed at the 
+screen. The input source is referred as stdin and the output source is referred as stdout. However,
+the input and output source can be changed, which is called I/O redirection. With a redirection
+operator, the input/output source can be changed with a file. There are three types of redirection:
+input cover(<), output cover(>), output append(>>). For example:
+    $ ls > test.out
+After this command is operated, the list of files in current working directory will not be displayed
+on the screen, but will be written into file test.out instead.
+    $ ls >> test.out
+After this command is operated, the output will also be redirected to file test.out. But if the file
+is not empty, the output will be appended to the tail of the file, different from the behavior of
+operator>, which will cover the existed file.
+    $ cat < test.in
+After this command is operated, the command will not read input from the keyboard, but read from
+file test.in instead.
+
+A concept closely related to I/O redirection is the concept of pipe. The pipe operator | joins the
+stdout and stdin of two commands. As for the command 
+    $ command1 |  command2
+the stdout of command1 is redirected to the pipe and the stdin of command2 is also redirected to the
+pipe. For example:
+    $ ls -l | wc -l
+The output of this command is the number of lines in the output of $ ls -l.
+
+Acknowledgements
+----------------
+Thanks to my teacher, Jiangmin Ji, who gives me good lectures about Linux Programming.
+--------------------------------------------------------------------------------------
